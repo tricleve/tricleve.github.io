@@ -1,0 +1,9 @@
+name: "my-website"
+navbar:
+  title: "My Website"
+  left:
+  - text: "Who am I?"
+    href: index.html
+  - text: "Budweiser Presentation"
+    href: Budweiser-Presentation.html
+    
