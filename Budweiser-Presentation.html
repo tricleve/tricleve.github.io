@@ -282,10 +282,10 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">Who am I?</a>
 </li>
 <li>
-  <a href="CLT_2.html">CLT</a>
+  <a href="Budweiser-Presentation.html">Budweiser Presentation</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -409,6 +409,39 @@ dim(comb_data)</code></pre>
 <div id="what-is-the-median-abv-and-ibu-in-each-state" class="section level2">
 <h2>What is the median ABV and IBU in each state?</h2>
 <p>The graphs below are a bar chart of the median ABV and median IBU for each state. The states are ordered alphabetically. The y axis for ABV has been shifted to make it easier to see differences in ABV between the states.</p>
+<pre class="r"><code>summary(beerclean)</code></pre>
+<pre><code>##                     Name.x        Beer_ID          ABV         
+##  Nonstop Hef Hop       :  12   Min.   :   1   Min.   :0.02700  
+##  Dale&#39;s Pale Ale       :   6   1st Qu.: 772   1st Qu.:0.05000  
+##  Longboard Island Lager:   4   Median :1439   Median :0.05700  
+##  1327 Pod&#39;s ESB        :   3   Mean   :1415   Mean   :0.05991  
+##  Boston Lager          :   3   3rd Qu.:2069   3rd Qu.:0.06800  
+##  Dagger Falls IPA      :   3   Max.   :2692   Max.   :0.12500  
+##  (Other)               :1374                                   
+##       IBU           Brewery_id                               Style    
+##  Min.   :  4.00   Min.   :  1.0   American IPA                  :301  
+##  1st Qu.: 21.00   1st Qu.: 95.0   American Pale Ale (APA)       :153  
+##  Median : 35.00   Median :198.0   American Amber / Red Ale      : 77  
+##  Mean   : 42.71   Mean   :224.2   American Double / Imperial IPA: 75  
+##  3rd Qu.: 64.00   3rd Qu.:351.0   American Blonde Ale           : 61  
+##  Max.   :138.00   Max.   :547.0   American Pale Wheat Ale       : 61  
+##                                   (Other)                       :677  
+##      Ounces                           Name.y               City     
+##  Min.   : 8.40   Oskar Blues Brewery     :  32   Portland    :  41  
+##  1st Qu.:12.00   Sun King Brewing Company:  32   Indianapolis:  36  
+##  Median :12.00   Sixpoint Craft Ales     :  23   San Diego   :  35  
+##  Mean   :13.51   Hopworks Urban Brewery  :  22   Brooklyn    :  28  
+##  3rd Qu.:16.00   Great Crescent Brewery  :  20   Boulder     :  26  
+##  Max.   :32.00   Stevens Point Brewery   :  20   Aurora      :  24  
+##                  (Other)                 :1256   (Other)     :1215  
+##      State         abbr          
+##   CO    :146   Length:1405       
+##   CA    :135   Class :character  
+##   IN    : 91   Mode  :character  
+##   TX    : 89                     
+##   OR    : 87                     
+##   MA    : 51                     
+##  (Other):806</code></pre>
 <pre class="r"><code>## The two plots below present the states alphabetically.
 beerclean %&gt;% group_by(abbr) %&gt;% summarise(medianABV= median(ABV))%&gt;% ggplot(aes(abbr,medianABV, fill=medianABV))+geom_bar(stat=&quot;identity&quot;, width=.5)+ coord_cartesian(ylim=c(.03,.07)) + scale_fill_gradient(low = &quot;yellow&quot;, high= &quot;red&quot;)+ labs(title=&quot;Median ABV by State&quot;, x=&quot;State&quot;, y=&quot;Median ABV&quot;) + theme(axis.text.x = element_text(angle=65, vjust=.3)) </code></pre>
 <p><img src="Budweiser-Presentation_files/figure-html/Plot%20median%20ABV%20and%20IBU%20by%20state-1.png" /><!-- --></p>
@@ -596,6 +629,10 @@ plot_usmap(data=df5, values=&quot;Beers_per_person_2018&quot;, color = &quot;bla
 * Proved Positive correlation between ABV and IBU<br />
 * KNN can accurately classify beers by type for new releases<br />
 * New England region is prime market for new IPA beer with low competition from other breweries</p>
+</div>
+<div id="web-link-to-rshiny-app" class="section level2">
+<h2>Web link to RShiny App</h2>
+<p><a href="https://tricleve.shinyapps.io/BudShiny/"> Bud Shiny App</a></p>
 </div>
 <div id="thank-you" class="section level2">
 <h2>Thank You</h2>
