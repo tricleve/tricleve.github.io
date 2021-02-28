@@ -6,4 +6,5 @@ navbar:
     href: index.html
   - text: "Budweiser Presentation"
     href: Budweiser-Presentation.html
-    
+  - text: "DDS Analytics Talent Management EDA"
+    href: CaseStudy2.html

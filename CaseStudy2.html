@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>DDSAnalytics Talent Management EDA</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Who am I?</a>
+</li>
+<li>
+  <a href="Budweiser-Presentation.html">Budweiser Presentation</a>
+</li>
+<li>
+  <a href="CaseStudy2.html">DDS Analytics Talent Management EDA</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">DDSAnalytics Talent Management EDA</h1>
+
+</div>
+
+
+<div id="web-link-to-youtube-video" class="section level2">
+<h2>Web link to Youtube video</h2>
+<p><a href="https://youtu.be/Y9-0hh8LNzg"> Cleveland’s Youtube </a></p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Today we will use the our data set to answer the following question:<br />
+* What does our data look like?<br />
+* What data was removed?<br />
+* What factors lead to attrition? What are the top 3?<br />
+* Can we build a model to predict attrition?<br />
+* What factors contribute to monthly income?<br />
+* Can we build a model to predict monthly income?</p>
+<p>##Initial Data Check<br />
+We found 870 observations with 36 variables.<br />
+19 Continous variables.<br />
+9 Nominal variables.<br />
+8 Ordinal variables.<br />
+The 8 Ordinal variables were imported ad intergers and were converted to Factors.</p>
+<p>Standard Hours, Over18, and EmployeeCount were not considered during EDA.<br />
+These variables had the same value for all observations.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(readxl)
+library(curl)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;curl&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     parse_date</code></pre>
+<pre class="r"><code>library(GGally)</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
+##   method from   
+##   +.gg   ggplot2</code></pre>
+<pre class="r"><code>library(e1071)
+library(caret)</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## 
+## Attaching package: &#39;caret&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     lift</code></pre>
+<pre class="r"><code>library(ggcorrplot)
+library(gridExtra)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gridExtra&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     combine</code></pre>
+<pre class="r"><code>data &lt;-read.csv(curl(&quot;https://raw.githubusercontent.com/tricleve/CaseStudy2DDS/master/CaseStudy2-data.csv&quot;))
+
+#str(data)
+#summary(data)
+#No missing values were found
+
+#Ordinal data was captured as integers.  Need to change variable type to Factor
+data$Education = as.factor(data$Education)
+data$EnvironmentSatisfaction = as.factor(data$EnvironmentSatisfaction)
+data$JobInvolvement = as.factor(data$JobInvolvement)
+data$JobLevel = as.factor(data$JobLevel)
+data$JobSatisfaction = as.factor(data$JobSatisfaction)
+data$PerformanceRating = as.factor(data$PerformanceRating)
+data$RelationshipSatisfaction = as.factor(data$RelationshipSatisfaction)
+data$WorkLifeBalance = as.factor(data$WorkLifeBalance)
+
+
+#Import Attrition Competition set and change variables
+Comp_attr &lt;- read.csv(curl(&quot;https://raw.githubusercontent.com/tricleve/CaseStudy2DDS/master/CaseStudy2CompSetNoAttrition.csv&quot;))
+Comp_attr$Education = as.factor(Comp_attr$Education)
+Comp_attr$EnvironmentSatisfaction = as.factor(Comp_attr$EnvironmentSatisfaction)
+Comp_attr$JobInvolvement = as.factor(Comp_attr$JobInvolvement)
+Comp_attr$JobLevel = as.factor(Comp_attr$JobLevel)
+Comp_attr$JobSatisfaction = as.factor(Comp_attr$JobSatisfaction)
+Comp_attr$PerformanceRating = as.factor(Comp_attr$PerformanceRating)
+Comp_attr$RelationshipSatisfaction = as.factor(Comp_attr$RelationshipSatisfaction)
+Comp_attr$WorkLifeBalance = as.factor(Comp_attr$WorkLifeBalance)
+#str(Comp_attr)
+
+#Import Salary Competition data set adn change variables
+Comp_sal &lt;-read.csv(curl(&quot;https://raw.githubusercontent.com/tricleve/CaseStudy2DDS/master/CaseStudy2CompSetNoSalary.csv&quot;))
+Comp_sal$Education = as.factor(Comp_sal$Education)
+Comp_sal$EnvironmentSatisfaction = as.factor(Comp_sal$EnvironmentSatisfaction)
+Comp_sal$JobInvolvement = as.factor(Comp_sal$JobInvolvement)
+Comp_sal$JobLevel = as.factor(Comp_sal$JobLevel)
+Comp_sal$JobSatisfaction = as.factor(Comp_sal$JobSatisfaction)
+Comp_sal$PerformanceRating = as.factor(Comp_sal$PerformanceRating)
+Comp_sal$RelationshipSatisfaction = as.factor(Comp_sal$RelationshipSatisfaction)
+Comp_sal$WorkLifeBalance = as.factor(Comp_sal$WorkLifeBalance)
+#str(Comp_sal)</code></pre>
+</div>
+<div id="attrition-continuous-eda" class="section level2">
+<h2>Attrition: Continuous EDA</h2>
+<pre class="r"><code>#EDA of Continuous variables in data set
+
+#Appears to be a factor
+MI_plot &lt;-data %&gt;% ggplot(aes(MonthlyIncome))+geom_boxplot(aes(fill=Attrition))+labs(title=&quot;Monthly Income vs Attrition&quot;)
+TWY_plot &lt;-data %&gt;% ggplot(aes(TotalWorkingYears))+geom_boxplot(aes(fill=Attrition))+labs(title=&quot;TotalWorkingYears vs Attrition&quot;)
+YAC_plot &lt;- data %&gt;% ggplot(aes(YearsAtCompany))+geom_boxplot(aes(fill=Attrition))+labs(title=&quot;YearsAtCompany vs Attrition&quot;)
+YICR_plot &lt;- data %&gt;% ggplot(aes(YearsInCurrentRole))+geom_boxplot(aes(fill=Attrition))+labs(title=&quot;YearsInCurrentRole vs Attrition&quot;)
+YWCM_plot &lt;- data %&gt;% ggplot(aes(YearsWithCurrManager))+geom_boxplot(aes(fill=Attrition))+labs(title=&quot;YearsWithCurrManager vs Attrition&quot;)
+
+#T-tests for continuous variables that appear to be significant(ranked in ascending P-value order)
+leave_MI &lt;- data %&gt;% filter(Attrition==&quot;Yes&quot;) %&gt;% select(MonthlyIncome)
+stay_MI &lt;- data %&gt;% filter(Attrition==&quot;No&quot;) %&gt;% select(MonthlyIncome)
+MI_t &lt;-t.test(leave_MI, stay_MI, alternative=&quot;two.sided&quot;)
+
+leave_TWY &lt;- data %&gt;% filter(Attrition==&quot;Yes&quot;) %&gt;% select(TotalWorkingYears)
+stay_TWY &lt;- data %&gt;% filter(Attrition==&quot;No&quot;) %&gt;% select(TotalWorkingYears)
+TWY_t &lt;-t.test(leave_TWY, stay_TWY, alternative=&quot;two.sided&quot;)
+
+
+leave_YICR &lt;- data %&gt;% filter(Attrition==&quot;Yes&quot;) %&gt;% select(YearsInCurrentRole)
+stay_YICR &lt;- data %&gt;% filter(Attrition==&quot;No&quot;) %&gt;% select(YearsInCurrentRole)
+YICR &lt;- t.test(leave_YICR, stay_YICR, alternative=&quot;two.sided&quot;)
+
+leave_YWCM &lt;- data %&gt;% filter(Attrition==&quot;Yes&quot;) %&gt;% select(YearsWithCurrManager)
+stay_YWCM &lt;- data %&gt;% filter(Attrition==&quot;No&quot;) %&gt;% select(YearsWithCurrManager)
+YWCM &lt;- t.test(leave_YWCM, stay_YWCM, alternative=&quot;two.sided&quot;)
+
+
+leave_YAC &lt;- data %&gt;% filter(Attrition==&quot;Yes&quot;) %&gt;% select(YearsAtCompany)
+stay_YAC &lt;- data %&gt;% filter(Attrition==&quot;No&quot;) %&gt;% select(YearsAtCompany)
+YAC &lt;- t.test(leave_YAC, stay_YAC, alternative=&quot;two.sided&quot;)
+
+Cont_var = c(&quot;MonthlyIncome&quot;, &quot;TotalWorkingYears&quot;,&quot;YearsInCurrentRole&quot;,&quot;YearsWithCurrManager&quot;,&quot;YearsAtCompany&quot;)
+ttest_p = c(MI_t$p.value, TWY_t$p.value, YICR$p.value, YWCM$p.value, YAC$p.value)
+
+df_ttest = data.frame(Variable=Cont_var, &quot;TTest pvalue&quot;=ttest_p)</code></pre>
+<p>Boxplots were used to determine a relationship between the continuonus variables and Attrition.<br />
+Five variables appears signficant:<br />
+* Monthly Income<br />
+* TotalWOrkingYears<br />
+* YearsAtCompany<br />
+* YearsInCurrentRold<br />
+* YearsWithCurrManager</p>
+<p>A t-test was conducted to confirm signficance for these 5 variables.<br />
+The boxplots and p value table is below.</p>
+<pre class="r"><code>grid.arrange(MI_plot, TWY_plot, YAC_plot,YICR_plot, YWCM_plot,tableGrob(df_ttest))</code></pre>
+<p><img src="CaseStudy2_files/figure-html/Attrition: Continuous EDA cont.-1.png" width="672" /></p>
+<pre class="r"><code>#Doesn&#39;t appear to be a factor
+#data %&gt;% ggplot(aes(Age))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(YearsSinceLastPromotion))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(TrainingTimesLastYear))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(StockOptionLevel))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(PercentSalaryHike))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(NumCompaniesWorked))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(MonthlyRate))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(HourlyRate))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(DailyRate))+geom_boxplot(aes(fill=Attrition))
+#data %&gt;% ggplot(aes(DistanceFromHome))+geom_boxplot(aes(fill=Attrition))</code></pre>
+</div>
+<div id="attrition-categorical-eda" class="section level2">
+<h2>Attrition: Categorical EDA</h2>
+<p>The relationship between categorical variables and Attrition was assessed using a Proportion tables. A sample table is below:</p>
+<pre class="r"><code>#Categorical variable EDA
+
+#Categorical variable analysis -&gt; Looking at percentage left by each response
+#Appears to be a factor
+data %&gt;% group_by(JobLevel) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)</code></pre>
+<pre><code>## # A tibble: 5 x 5
+## # Groups:   JobLevel [5]
+##   JobLevel Attrition     n   sum perc_by_cat
+##   &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+## 1 1        Yes          86   329      0.261 
+## 2 2        Yes          30   312      0.0962
+## 3 3        Yes          17   132      0.129 
+## 4 4        Yes           3    60      0.05  
+## 5 5        Yes           4    37      0.108</code></pre>
+<pre class="r"><code>#data %&gt;% group_by(OverTime) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(JobInvolvement) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(JobRole) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(MaritalStatus) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)</code></pre>
+<p>5 Categorical variables were identified as having a relationship with Attrition:<br />
+* JobLevel<br />
+* OverTime<br />
+* JobInvolvement<br />
+* JobSatisfaction<br />
+* JobRole<br />
+* Marital Status<br />
+A bar chart vs Attrition and a chi square test was also completed for each of these variables.<br />
+The results can be seen below:</p>
+<pre class="r"><code>#Bar plots for variables deemed factors
+JL_plot &lt;- data %&gt;% ggplot(aes(JobLevel))+geom_bar(aes(fill=Attrition)) + labs(title=&quot;JobLevel vs Attrition&quot;)
+O_plot &lt;- data %&gt;% ggplot(aes(OverTime))+geom_bar(aes(fill=Attrition)) + labs(title=&quot;Overtime vs Attrition&quot;)
+JI_plot &lt;- data %&gt;% ggplot(aes(JobInvolvement))+geom_bar(aes(fill=Attrition)) + labs(title=&quot;JobInvolvement vs Attrition&quot;)
+JS_plot &lt;- data %&gt;% ggplot(aes(JobSatisfaction))+geom_bar(aes(fill=Attrition)) + labs(title=&quot;JobSatisfaction vs Attrition&quot;)
+JR_plot &lt;-data %&gt;% ggplot(aes(JobRole))+geom_bar(aes(fill=Attrition)) + labs(title=&quot;JobRole vs Attrition&quot;)
+MS_plot &lt;- data %&gt;% ggplot(aes(MaritalStatus))+geom_bar(aes(fill=Attrition)) + labs(title=&quot;MaritalStatus vs Attrition&quot;)
+
+#Chi square test to determine correlation
+JL_chi &lt;- chisq.test(data$JobLevel, data$Attrition)
+O_chi &lt;- chisq.test(data$OverTime, data$Attrition)
+JI_chi &lt;- chisq.test(data$JobInvolvement, data$Attrition)
+JR_chi &lt;- chisq.test(data$JobRole, data$Attrition)</code></pre>
+<pre><code>## Warning in chisq.test(data$JobRole, data$Attrition): Chi-squared approximation
+## may be incorrect</code></pre>
+<pre class="r"><code>MS_chi &lt;- chisq.test(data$MaritalStatus, data$Attrition)
+
+cat_var = c(&quot;JobLevel&quot;, &quot;OverTime&quot;, &quot;JobInvolvement&quot;, &quot;JobRole&quot;, &quot;MaritalStatus&quot;)
+chi_p = c(JL_chi$p.value, O_chi$p.value, JI_chi$p.value, JR_chi$p.value, MS_chi$p.value)
+df_chitest = data.frame(Variable=cat_var, Chisq.pvalue=chi_p)
+
+grid.arrange(JL_plot, O_plot, JI_plot, JR_plot, MS_plot,tableGrob(arrange(df_chitest, Chisq.pvalue)))</code></pre>
+<p><img src="CaseStudy2_files/figure-html/Attrition: Categorical EDA cont-1.png" width="672" /></p>
+<pre class="r"><code>#Doesn&#39;t appear
+#data %&gt;% group_by(PerformanceRating) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(RelationshipSatisfaction) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(Education) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(EducationField) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(Gender) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(BusinessTravel) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(Department) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(WorkLifeBalance) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#data %&gt;% group_by(JobSatisfaction) %&gt;% count(Attrition) %&gt;% mutate(sum=sum(n)) %&gt;% mutate(perc_by_cat=n/sum) %&gt;% filter(Attrition==&quot;Yes&quot;)
+#Attrition model plots</code></pre>
+<p>##NaiveBayes The NB model was created by adding a signficant variable one at a time.<br />
+Ulitmately 7 variables were used to reach Sensitivity and Specificity &gt;60%.<br />
+These variables were:<br />
+* OverTime<br />
+* JobRole<br />
+* JobInvolvement<br />
+* MonthlyIncome<br />
+* TotalWorkingYears<br />
+* YearsInCurrentRole<br />
+* JobLevel<br />
+The Confusion matrix and plots are below.</p>
+<pre class="r"><code>set.seed(6)
+splitPerc = .75
+
+trainindex = sample(seq(1,dim(data)[1],1), round(splitPerc*dim(data)[1]))
+
+trainIndices = sample(seq(1,dim(data)[1],1),round(splitPerc * dim(data)[1]))
+train = data[trainindex,]
+test = data[-trainindex,]
+
+m = naiveBayes(Attrition~OverTime+JobRole+JobInvolvement+MonthlyIncome+TotalWorkingYears+YearsInCurrentRole+JobLevel,data=train)
+table(predict(m, newdata=test),test$Attrition)</code></pre>
+<pre><code>##      
+##        No Yes
+##   No  162  13
+##   Yes  22  21</code></pre>
+<pre class="r"><code>CM = confusionMatrix(table(predict(m, newdata=test),test$Attrition))
+CM</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##      
+##        No Yes
+##   No  162  13
+##   Yes  22  21
+##                                           
+##                Accuracy : 0.8394          
+##                  95% CI : (0.7839, 0.8856)
+##     No Information Rate : 0.844           
+##     P-Value [Acc &gt; NIR] : 0.6178          
+##                                           
+##                   Kappa : 0.4496          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.1763          
+##                                           
+##             Sensitivity : 0.8804          
+##             Specificity : 0.6176          
+##          Pos Pred Value : 0.9257          
+##          Neg Pred Value : 0.4884          
+##              Prevalence : 0.8440          
+##          Detection Rate : 0.7431          
+##    Detection Prevalence : 0.8028          
+##       Balanced Accuracy : 0.7490          
+##                                           
+##        &#39;Positive&#39; Class : No              
+## </code></pre>
+<pre class="r"><code>grid.arrange(O_plot, JR_plot,JI_plot, MI_plot, TWY_plot,YICR_plot,JL_plot)</code></pre>
+<p><img src="CaseStudy2_files/figure-html/Attrition%20model-1.png" width="672" /></p>
+<pre class="r"><code>comp_NB = naiveBayes(Attrition~OverTime+MonthlyIncome+JobRole+TotalWorkingYears+JobInvolvement+YearsInCurrentRole+JobLevel,data=data)
+
+pred_att = data.frame(Attrition =predict(comp_NB, newdata=Comp_attr))
+att_comp &lt;-bind_cols(Comp_attr,pred_att)
+
+#summary(att_comp)
+
+#write.csv(att_comp,file=&quot;Case2PredictionsJohnson Attrition.csv&quot;)</code></pre>
+</div>
+<div id="salary-eda" class="section level2">
+<h2>Salary EDA</h2>
+<p>4 Categorical variables were observed to have some type of relationship with MonthlyIncome.<br />
+* JobLevel<br />
+* Education<br />
+* JobRole<br />
+* EducationField<br />
+The boxplots of these variables are below:</p>
+<pre class="r"><code>#Ordinal variable EDA
+#data %&gt;% select(Education, EnvironmentSatisfaction, JobInvolvement, JobSatisfaction, PerformanceRating, WorkLifeBalance, JobLevel, RelationshipSatisfaction, MonthlyIncome) %&gt;% ggpairs(upper = list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;), lower=list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;))
+# Correlation to JobLevel, maybe Education
+
+JLS_plot &lt;- data %&gt;% ggplot(aes(JobLevel, MonthlyIncome))+geom_boxplot()+labs(title=&quot;Job Level vs Monthly Income&quot;)
+
+ES_plot &lt;- data %&gt;% ggplot(aes(Education, MonthlyIncome))+geom_boxplot()+labs(title=&quot;Education vs Monthly Income&quot;)
+
+#Nominal variable EDA
+#data %&gt;% select(Attrition, BusinessTravel, Department, EducationField, Gender, JobRole, MaritalStatus, OverTime, MonthlyIncome) %&gt;% ggpairs(upper = list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;), lower=list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;))
+# JobRole has interesting differences.  Maybe EducationField
+
+JRS_plot &lt;- data %&gt;% ggplot(aes(JobRole,MonthlyIncome))+geom_boxplot()+labs(title=&quot;JobRole vs Monthly Income&quot;)
+
+EFS_plot &lt;- data %&gt;% ggplot(aes(EducationField,MonthlyIncome))+geom_boxplot()+labs(title=&quot;EducationField vs Monthly Income&quot;)
+
+grid.arrange(JLS_plot, ES_plot, JRS_plot, EFS_plot)</code></pre>
+<p><img src="CaseStudy2_files/figure-html/Salary%20EDA-1.png" width="672" /></p>
+<p>3 Continuous variables were observed to have some type of relationship with MonthlyIncome.<br />
+* Age<br />
+* TotalWorkingYears<br />
+* Years at Company<br />
+This was confirmed by a scatterplot for each.<br />
+A correlation matrix was completed with additional variables to confirm as well.</p>
+<pre class="r"><code>#Continous variable EDA
+#data %&gt;% select(Age,DailyRate, DistanceFromHome, HourlyRate, MonthlyRate, NumCompaniesWorked, PercentSalaryHike, MonthlyIncome) %&gt;% ggpairs(upper = list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;), lower=list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;))
+# Age has a positive correlation
+
+AgS_plot &lt;- data %&gt;% ggplot(aes(Age,MonthlyIncome))+geom_point()+geom_smooth(method=&quot;lm&quot;)+labs(title = &quot;Age vs Monthly Income&quot;)
+
+#data %&gt;% select(StockOptionLevel, TotalWorkingYears, TrainingTimesLastYear, YearsSinceLastPromotion, YearsInCurrentRole, YearsWithCurrManager, YearsAtCompany, MonthlyIncome) %&gt;% ggpairs(upper = list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;), lower=list(continuous=&quot;smooth&quot;, combo=&quot;box&quot;, discrete = &quot;facetbar&quot;))
+#TotalWorking Years and YearsatCompany have a strong correlation
+#Years SinceLastPromotion, InCurrentRole and WithCurrManager have weak positive correlation
+
+TWYS_plot &lt;- data %&gt;% ggplot(aes(TotalWorkingYears,MonthlyIncome))+geom_point()+geom_smooth(method=&quot;lm&quot;)+labs(title = &quot;TotalWorkingYears vs Monthly Income&quot;)
+
+YaCS_plot &lt;- data %&gt;% ggplot(aes(YearsAtCompany,MonthlyIncome))+geom_point()+geom_smooth(method=&quot;lm&quot;)+labs(title = &quot;YearsAtCompany vs Monthly Income&quot;)
+
+grid.arrange(AgS_plot,TWYS_plot, YaCS_plot)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;
+## `geom_smooth()` using formula &#39;y ~ x&#39;
+## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="CaseStudy2_files/figure-html/Salary%20EDA%20Cont-1.png" width="672" /></p>
+<pre class="r"><code>corr_data &lt;- data %&gt;% select(Age, TotalWorkingYears, YearsAtCompany, YearsSinceLastPromotion, YearsInCurrentRole, YearsWithCurrManager, MonthlyIncome)
+
+corr &lt;- round(cor(corr_data),1)
+
+ggcorrplot(corr, hc.order = TRUE, 
+           type = &quot;lower&quot;, 
+           lab = TRUE, 
+           lab_size = 3, 
+           method=&quot;circle&quot;, 
+           colors = c(&quot;tomato2&quot;, &quot;white&quot;, &quot;springgreen3&quot;), 
+           title=&quot;Correlogram of Continuous Variables&quot;, 
+           ggtheme=theme_bw)</code></pre>
+<p><img src="CaseStudy2_files/figure-html/Salary%20EDA%20Cont-2.png" width="672" /></p>
+<pre class="r"><code>#TotalWorkingYears</code></pre>
+</div>
+<div id="salary-regression" class="section level2">
+<h2>Salary Regression</h2>
+<p>The Regression model was build by adding one variable at a time.<br />
+Two variables were used to achieve the RMSE &lt; $3000.<br />
+These variables were:<br />
+* TotalWorkingYears<br />
+* JobLevel<br />
+The plots and regression results are below.</p>
+<pre class="r"><code>Salary_train &lt;- data %&gt;% select(MonthlyIncome, TotalWorkingYears, JobLevel)
+
+fit &lt;- lm(MonthlyIncome~TotalWorkingYears+JobLevel, data=Salary_train)
+
+summary(fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = MonthlyIncome ~ TotalWorkingYears + JobLevel, data = Salary_train)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4957.9  -657.8  -134.6   618.2  4525.8 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        2544.901     89.085  28.567  &lt; 2e-16 ***
+## TotalWorkingYears    33.442      9.426   3.548 0.000409 ***
+## JobLevel2          2652.205    107.666  24.634  &lt; 2e-16 ***
+## JobLevel3          6820.371    152.732  44.656  &lt; 2e-16 ***
+## JobLevel4         11858.212    254.564  46.582  &lt; 2e-16 ***
+## JobLevel5         15800.546    289.997  54.485  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1256 on 864 degrees of freedom
+## Multiple R-squared:  0.9258, Adjusted R-squared:  0.9254 
+## F-statistic:  2157 on 5 and 864 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>#confint(fit)
+
+train(MonthlyIncome~TotalWorkingYears+JobLevel, method=&quot;lm&quot;,data=Salary_train, trControl = trainControl(method = &quot;LOOCV&quot;))</code></pre>
+<pre><code>## Linear Regression 
+## 
+## 870 samples
+##   2 predictor
+## 
+## No pre-processing
+## Resampling: Leave-One-Out Cross-Validation 
+## Summary of sample sizes: 869, 869, 869, 869, 869, 869, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE     
+##   1261.666  0.9246115  915.7436
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+<pre class="r"><code>grid.arrange(TWYS_plot, JLS_plot)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="CaseStudy2_files/figure-html/Salary%20Model-1.png" width="672" /></p>
+<pre class="r"><code>pred_sal = data.frame(MonthlyIncome = predict(fit, newdata = Comp_sal))
+sal_comp &lt;-bind_cols(Comp_sal, pred_sal)
+
+#summary(sal_comp)
+
+#write.csv(sal_comp, file=&quot;Case2PredictionsJohnson Salary.csv&quot;)</code></pre>
+<p>##In Summary Removed 3 variables from consideration (StandardHours, Over18, EmployeeCount)<br />
+10 Variables considered for Attrition Prediction Model<br />
+* 5 Categorical<br />
+* 5 Continous<br />
+Final Attrition Prediction Model had 7 Variables(4 Categorical/3Continuous)<br />
+<em>Sensitivity = 88%<br />
+</em>Specificity = 62%<br />
+7 Variables considered for Salary Model<br />
+* 4 Categorical Variables<br />
+* 3 Continuous Variables<br />
+Final Salary Model has 2 Variables (1 each Categorical/Continuous)<br />
+* R2 = .93 * RMSE = $1262</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
