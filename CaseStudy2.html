@@ -328,35 +328,16 @@ We found 870 observations with 36 variables.<br />
 The 8 Ordinal variables were imported ad intergers and were converted to Factors.</p>
 <p>Standard Hours, Over18, and EmployeeCount were not considered during EDA.<br />
 These variables had the same value for all observations.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
-## v tibble  3.0.4     v dplyr   1.0.2
-## v tidyr   1.1.2     v stringr 1.4.0
-## v readr   1.4.0     v forcats 0.5.1</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(readxl)
-library(curl)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;curl&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:readr&#39;:
-## 
-##     parse_date</code></pre>
-<pre class="r"><code>library(GGally)</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(curl)
+library(GGally)</code></pre>
 <pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
 ##   method from   
 ##   +.gg   ggplot2</code></pre>
 <pre class="r"><code>library(e1071)
-library(caret)</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## 
-## Attaching package: &#39;caret&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     lift</code></pre>
-<pre class="r"><code>library(ggcorrplot)
+library(caret)
+library(ggcorrplot)
 library(gridExtra)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;gridExtra&#39;</code></pre>
@@ -508,8 +489,7 @@ JL_chi &lt;- chisq.test(data$JobLevel, data$Attrition)
 O_chi &lt;- chisq.test(data$OverTime, data$Attrition)
 JI_chi &lt;- chisq.test(data$JobInvolvement, data$Attrition)
 JR_chi &lt;- chisq.test(data$JobRole, data$Attrition)</code></pre>
-<pre><code>## Warning in chisq.test(data$JobRole, data$Attrition): Chi-squared approximation
-## may be incorrect</code></pre>
+<pre><code>## Warning in chisq.test(data$JobRole, data$Attrition): Chi-squared approximation may be incorrect</code></pre>
 <pre class="r"><code>MS_chi &lt;- chisq.test(data$MaritalStatus, data$Attrition)
 
 cat_var = c(&quot;JobLevel&quot;, &quot;OverTime&quot;, &quot;JobInvolvement&quot;, &quot;JobRole&quot;, &quot;MaritalStatus&quot;)

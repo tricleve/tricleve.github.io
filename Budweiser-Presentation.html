@@ -287,6 +287,9 @@ $(document).ready(function () {
 <li>
   <a href="Budweiser-Presentation.html">Budweiser Presentation</a>
 </li>
+<li>
+  <a href="CaseStudy2.html">DDS Analytics Talent Management EDA</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -351,42 +354,21 @@ plot_usmap(data=plotbrew, values=&quot;Breweries&quot;, color = &quot;black&quot
 comb_data = full_join(beers,breweries, by=&quot;Brewery_id&quot;)
 
 tail(comb_data, 6)</code></pre>
-<pre><code>##                           Name.x Beer_ID   ABV IBU Brewery_id
-## 2405 Rocky Mountain Oyster Stout    1035 0.075  NA        425
-## 2406                   Belgorado     928 0.067  45        425
-## 2407               Rail Yard Ale     807 0.052  NA        425
-## 2408             B3K Black Lager     620 0.055  NA        425
-## 2409         Silverback Pale Ale     145 0.055  40        425
-## 2410        Rail Yard Ale (2009)      84 0.052  NA        425
-##                         Style Ounces                  Name.y   City State abbr
-## 2405           American Stout     12 Wynkoop Brewing Company Denver    CO   CO
-## 2406              Belgian IPA     12 Wynkoop Brewing Company Denver    CO   CO
-## 2407 American Amber / Red Ale     12 Wynkoop Brewing Company Denver    CO   CO
-## 2408              Schwarzbier     12 Wynkoop Brewing Company Denver    CO   CO
-## 2409  American Pale Ale (APA)     12 Wynkoop Brewing Company Denver    CO   CO
-## 2410 American Amber / Red Ale     12 Wynkoop Brewing Company Denver    CO   CO</code></pre>
+<pre><code>##                           Name.x Beer_ID   ABV IBU Brewery_id                    Style Ounces                  Name.y   City State abbr
+## 2405 Rocky Mountain Oyster Stout    1035 0.075  NA        425           American Stout     12 Wynkoop Brewing Company Denver    CO   CO
+## 2406                   Belgorado     928 0.067  45        425              Belgian IPA     12 Wynkoop Brewing Company Denver    CO   CO
+## 2407               Rail Yard Ale     807 0.052  NA        425 American Amber / Red Ale     12 Wynkoop Brewing Company Denver    CO   CO
+## 2408             B3K Black Lager     620 0.055  NA        425              Schwarzbier     12 Wynkoop Brewing Company Denver    CO   CO
+## 2409         Silverback Pale Ale     145 0.055  40        425  American Pale Ale (APA)     12 Wynkoop Brewing Company Denver    CO   CO
+## 2410        Rail Yard Ale (2009)      84 0.052  NA        425 American Amber / Red Ale     12 Wynkoop Brewing Company Denver    CO   CO</code></pre>
 <pre class="r"><code>head(comb_data, 6)</code></pre>
-<pre><code>##                Name.x Beer_ID   ABV IBU Brewery_id
-## 1            Pub Beer    1436 0.050  NA        409
-## 2         Devil&#39;s Cup    2265 0.066  NA        178
-## 3 Rise of the Phoenix    2264 0.071  NA        178
-## 4            Sinister    2263 0.090  NA        178
-## 5       Sex and Candy    2262 0.075  NA        178
-## 6        Black Exodus    2261 0.077  NA        178
-##                            Style Ounces                    Name.y City State
-## 1            American Pale Lager     12 10 Barrel Brewing Company Bend    OR
-## 2        American Pale Ale (APA)     12       18th Street Brewery Gary    IN
-## 3                   American IPA     12       18th Street Brewery Gary    IN
-## 4 American Double / Imperial IPA     12       18th Street Brewery Gary    IN
-## 5                   American IPA     12       18th Street Brewery Gary    IN
-## 6                  Oatmeal Stout     12       18th Street Brewery Gary    IN
-##   abbr
-## 1   OR
-## 2   IN
-## 3   IN
-## 4   IN
-## 5   IN
-## 6   IN</code></pre>
+<pre><code>##                Name.x Beer_ID   ABV IBU Brewery_id                          Style Ounces                    Name.y City State abbr
+## 1            Pub Beer    1436 0.050  NA        409            American Pale Lager     12 10 Barrel Brewing Company Bend    OR   OR
+## 2         Devil&#39;s Cup    2265 0.066  NA        178        American Pale Ale (APA)     12       18th Street Brewery Gary    IN   IN
+## 3 Rise of the Phoenix    2264 0.071  NA        178                   American IPA     12       18th Street Brewery Gary    IN   IN
+## 4            Sinister    2263 0.090  NA        178 American Double / Imperial IPA     12       18th Street Brewery Gary    IN   IN
+## 5       Sex and Candy    2262 0.075  NA        178                   American IPA     12       18th Street Brewery Gary    IN   IN
+## 6        Black Exodus    2261 0.077  NA        178                  Oatmeal Stout     12       18th Street Brewery Gary    IN   IN</code></pre>
 <p>The code above reads the beers.csv from github and completes a full join of beers.csv and breweries.csv.</p>
 </div>
 <div id="where-did-we-land-post-data-clean-up" class="section level2">
@@ -410,38 +392,22 @@ dim(comb_data)</code></pre>
 <h2>What is the median ABV and IBU in each state?</h2>
 <p>The graphs below are a bar chart of the median ABV and median IBU for each state. The states are ordered alphabetically. The y axis for ABV has been shifted to make it easier to see differences in ABV between the states.</p>
 <pre class="r"><code>summary(beerclean)</code></pre>
-<pre><code>##                     Name.x        Beer_ID          ABV         
-##  Nonstop Hef Hop       :  12   Min.   :   1   Min.   :0.02700  
-##  Dale&#39;s Pale Ale       :   6   1st Qu.: 772   1st Qu.:0.05000  
-##  Longboard Island Lager:   4   Median :1439   Median :0.05700  
-##  1327 Pod&#39;s ESB        :   3   Mean   :1415   Mean   :0.05991  
-##  Boston Lager          :   3   3rd Qu.:2069   3rd Qu.:0.06800  
-##  Dagger Falls IPA      :   3   Max.   :2692   Max.   :0.12500  
-##  (Other)               :1374                                   
-##       IBU           Brewery_id                               Style    
-##  Min.   :  4.00   Min.   :  1.0   American IPA                  :301  
-##  1st Qu.: 21.00   1st Qu.: 95.0   American Pale Ale (APA)       :153  
-##  Median : 35.00   Median :198.0   American Amber / Red Ale      : 77  
-##  Mean   : 42.71   Mean   :224.2   American Double / Imperial IPA: 75  
-##  3rd Qu.: 64.00   3rd Qu.:351.0   American Blonde Ale           : 61  
-##  Max.   :138.00   Max.   :547.0   American Pale Wheat Ale       : 61  
-##                                   (Other)                       :677  
-##      Ounces                           Name.y               City     
-##  Min.   : 8.40   Oskar Blues Brewery     :  32   Portland    :  41  
-##  1st Qu.:12.00   Sun King Brewing Company:  32   Indianapolis:  36  
-##  Median :12.00   Sixpoint Craft Ales     :  23   San Diego   :  35  
-##  Mean   :13.51   Hopworks Urban Brewery  :  22   Brooklyn    :  28  
-##  3rd Qu.:16.00   Great Crescent Brewery  :  20   Boulder     :  26  
-##  Max.   :32.00   Stevens Point Brewery   :  20   Aurora      :  24  
-##                  (Other)                 :1256   (Other)     :1215  
-##      State         abbr          
-##   CO    :146   Length:1405       
-##   CA    :135   Class :character  
-##   IN    : 91   Mode  :character  
-##   TX    : 89                     
-##   OR    : 87                     
-##   MA    : 51                     
-##  (Other):806</code></pre>
+<pre><code>##                     Name.x        Beer_ID          ABV               IBU           Brewery_id                               Style    
+##  Nonstop Hef Hop       :  12   Min.   :   1   Min.   :0.02700   Min.   :  4.00   Min.   :  1.0   American IPA                  :301  
+##  Dale&#39;s Pale Ale       :   6   1st Qu.: 772   1st Qu.:0.05000   1st Qu.: 21.00   1st Qu.: 95.0   American Pale Ale (APA)       :153  
+##  Longboard Island Lager:   4   Median :1439   Median :0.05700   Median : 35.00   Median :198.0   American Amber / Red Ale      : 77  
+##  1327 Pod&#39;s ESB        :   3   Mean   :1415   Mean   :0.05991   Mean   : 42.71   Mean   :224.2   American Double / Imperial IPA: 75  
+##  Boston Lager          :   3   3rd Qu.:2069   3rd Qu.:0.06800   3rd Qu.: 64.00   3rd Qu.:351.0   American Blonde Ale           : 61  
+##  Dagger Falls IPA      :   3   Max.   :2692   Max.   :0.12500   Max.   :138.00   Max.   :547.0   American Pale Wheat Ale       : 61  
+##  (Other)               :1374                                                                     (Other)                       :677  
+##      Ounces                           Name.y               City          State         abbr          
+##  Min.   : 8.40   Oskar Blues Brewery     :  32   Portland    :  41    CO    :146   Length:1405       
+##  1st Qu.:12.00   Sun King Brewing Company:  32   Indianapolis:  36    CA    :135   Class :character  
+##  Median :12.00   Sixpoint Craft Ales     :  23   San Diego   :  35    IN    : 91   Mode  :character  
+##  Mean   :13.51   Hopworks Urban Brewery  :  22   Brooklyn    :  28    TX    : 89                     
+##  3rd Qu.:16.00   Great Crescent Brewery  :  20   Boulder     :  26    OR    : 87                     
+##  Max.   :32.00   Stevens Point Brewery   :  20   Aurora      :  24    MA    : 51                     
+##                  (Other)                 :1256   (Other)     :1215   (Other):806</code></pre>
 <pre class="r"><code>## The two plots below present the states alphabetically.
 beerclean %&gt;% group_by(abbr) %&gt;% summarise(medianABV= median(ABV))%&gt;% ggplot(aes(abbr,medianABV, fill=medianABV))+geom_bar(stat=&quot;identity&quot;, width=.5)+ coord_cartesian(ylim=c(.03,.07)) + scale_fill_gradient(low = &quot;yellow&quot;, high= &quot;red&quot;)+ labs(title=&quot;Median ABV by State&quot;, x=&quot;State&quot;, y=&quot;Median ABV&quot;) + theme(axis.text.x = element_text(angle=65, vjust=.3)) </code></pre>
 <p><img src="Budweiser-Presentation_files/figure-html/Plot%20median%20ABV%20and%20IBU%20by%20state-1.png" /><!-- --></p>
@@ -571,23 +537,15 @@ BRR &lt;-BRR %&gt;% rename(State = state, &quot;Beers_per_person_2018&quot; = &q
 
 #pull state data for mapping
 state.abb</code></pre>
-<pre><code>##  [1] &quot;AL&quot; &quot;AK&quot; &quot;AZ&quot; &quot;AR&quot; &quot;CA&quot; &quot;CO&quot; &quot;CT&quot; &quot;DE&quot; &quot;FL&quot; &quot;GA&quot; &quot;HI&quot; &quot;ID&quot; &quot;IL&quot; &quot;IN&quot; &quot;IA&quot;
-## [16] &quot;KS&quot; &quot;KY&quot; &quot;LA&quot; &quot;ME&quot; &quot;MD&quot; &quot;MA&quot; &quot;MI&quot; &quot;MN&quot; &quot;MS&quot; &quot;MO&quot; &quot;MT&quot; &quot;NE&quot; &quot;NV&quot; &quot;NH&quot; &quot;NJ&quot;
-## [31] &quot;NM&quot; &quot;NY&quot; &quot;NC&quot; &quot;ND&quot; &quot;OH&quot; &quot;OK&quot; &quot;OR&quot; &quot;PA&quot; &quot;RI&quot; &quot;SC&quot; &quot;SD&quot; &quot;TN&quot; &quot;TX&quot; &quot;UT&quot; &quot;VT&quot;
-## [46] &quot;VA&quot; &quot;WA&quot; &quot;WV&quot; &quot;WI&quot; &quot;WY&quot;</code></pre>
+<pre><code>##  [1] &quot;AL&quot; &quot;AK&quot; &quot;AZ&quot; &quot;AR&quot; &quot;CA&quot; &quot;CO&quot; &quot;CT&quot; &quot;DE&quot; &quot;FL&quot; &quot;GA&quot; &quot;HI&quot; &quot;ID&quot; &quot;IL&quot; &quot;IN&quot; &quot;IA&quot; &quot;KS&quot; &quot;KY&quot; &quot;LA&quot; &quot;ME&quot; &quot;MD&quot; &quot;MA&quot; &quot;MI&quot; &quot;MN&quot; &quot;MS&quot; &quot;MO&quot; &quot;MT&quot; &quot;NE&quot;
+## [28] &quot;NV&quot; &quot;NH&quot; &quot;NJ&quot; &quot;NM&quot; &quot;NY&quot; &quot;NC&quot; &quot;ND&quot; &quot;OH&quot; &quot;OK&quot; &quot;OR&quot; &quot;PA&quot; &quot;RI&quot; &quot;SC&quot; &quot;SD&quot; &quot;TN&quot; &quot;TX&quot; &quot;UT&quot; &quot;VT&quot; &quot;VA&quot; &quot;WA&quot; &quot;WV&quot; &quot;WI&quot; &quot;WY&quot;</code></pre>
 <pre class="r"><code>state.name</code></pre>
-<pre><code>##  [1] &quot;Alabama&quot;        &quot;Alaska&quot;         &quot;Arizona&quot;        &quot;Arkansas&quot;      
-##  [5] &quot;California&quot;     &quot;Colorado&quot;       &quot;Connecticut&quot;    &quot;Delaware&quot;      
-##  [9] &quot;Florida&quot;        &quot;Georgia&quot;        &quot;Hawaii&quot;         &quot;Idaho&quot;         
-## [13] &quot;Illinois&quot;       &quot;Indiana&quot;        &quot;Iowa&quot;           &quot;Kansas&quot;        
-## [17] &quot;Kentucky&quot;       &quot;Louisiana&quot;      &quot;Maine&quot;          &quot;Maryland&quot;      
-## [21] &quot;Massachusetts&quot;  &quot;Michigan&quot;       &quot;Minnesota&quot;      &quot;Mississippi&quot;   
-## [25] &quot;Missouri&quot;       &quot;Montana&quot;        &quot;Nebraska&quot;       &quot;Nevada&quot;        
-## [29] &quot;New Hampshire&quot;  &quot;New Jersey&quot;     &quot;New Mexico&quot;     &quot;New York&quot;      
-## [33] &quot;North Carolina&quot; &quot;North Dakota&quot;   &quot;Ohio&quot;           &quot;Oklahoma&quot;      
-## [37] &quot;Oregon&quot;         &quot;Pennsylvania&quot;   &quot;Rhode Island&quot;   &quot;South Carolina&quot;
-## [41] &quot;South Dakota&quot;   &quot;Tennessee&quot;      &quot;Texas&quot;          &quot;Utah&quot;          
-## [45] &quot;Vermont&quot;        &quot;Virginia&quot;       &quot;Washington&quot;     &quot;West Virginia&quot; 
+<pre><code>##  [1] &quot;Alabama&quot;        &quot;Alaska&quot;         &quot;Arizona&quot;        &quot;Arkansas&quot;       &quot;California&quot;     &quot;Colorado&quot;       &quot;Connecticut&quot;    &quot;Delaware&quot;      
+##  [9] &quot;Florida&quot;        &quot;Georgia&quot;        &quot;Hawaii&quot;         &quot;Idaho&quot;          &quot;Illinois&quot;       &quot;Indiana&quot;        &quot;Iowa&quot;           &quot;Kansas&quot;        
+## [17] &quot;Kentucky&quot;       &quot;Louisiana&quot;      &quot;Maine&quot;          &quot;Maryland&quot;       &quot;Massachusetts&quot;  &quot;Michigan&quot;       &quot;Minnesota&quot;      &quot;Mississippi&quot;   
+## [25] &quot;Missouri&quot;       &quot;Montana&quot;        &quot;Nebraska&quot;       &quot;Nevada&quot;         &quot;New Hampshire&quot;  &quot;New Jersey&quot;     &quot;New Mexico&quot;     &quot;New York&quot;      
+## [33] &quot;North Carolina&quot; &quot;North Dakota&quot;   &quot;Ohio&quot;           &quot;Oklahoma&quot;       &quot;Oregon&quot;         &quot;Pennsylvania&quot;   &quot;Rhode Island&quot;   &quot;South Carolina&quot;
+## [41] &quot;South Dakota&quot;   &quot;Tennessee&quot;      &quot;Texas&quot;          &quot;Utah&quot;           &quot;Vermont&quot;        &quot;Virginia&quot;       &quot;Washington&quot;     &quot;West Virginia&quot; 
 ## [49] &quot;Wisconsin&quot;      &quot;Wyoming&quot;</code></pre>
 <pre class="r"><code>df &lt;- data.frame(state.abb,state.name)
 df &lt;- df %&gt;% rename(State = state.name)
